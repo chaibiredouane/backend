@@ -1,13 +1,13 @@
 package com.reception.receptionbackend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "CONREP_NON_CONFORMITY")
+@SequenceGenerator(name="NC_seq", initialValue=150000)
 public class NcData {
     @Id
+    @GeneratedValue(strategy= GenerationType.SEQUENCE,generator = "NC_seq")
     private long id;
     private long sample_id;
     private String nc_code;
@@ -18,8 +18,7 @@ public class NcData {
 
     public NcData() {}
 
-    public NcData(long id, long sample_id, String nc_code, String status, String user_comment, String create_date, String create_by) {
-        this.id = id;
+    public NcData(long sample_id, String nc_code, String status, String user_comment, String create_date, String create_by) {
         this.sample_id = sample_id;
         this.nc_code = nc_code;
         this.status = status;

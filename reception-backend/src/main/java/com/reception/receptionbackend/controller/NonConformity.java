@@ -57,19 +57,18 @@ public class NonConformity {
     public void deleteNcData(@RequestBody NcData body){ncDataRepo.delete(body);}
     @GetMapping (value = "/data/{id}")
     public List<NcData> getById(@PathVariable long id){return ncDataRepo.findById(id);}
-    @GetMapping (value = "/data/params")
-    public List<NcData> getByParam(@RequestParam Map<String, String> listParams)
+    @GetMapping (value = "/data/param")
+    public List<NcData> getByParam(@RequestParam Map<String, String> listParam)
     {
     try {
-            if (listParams.containsKey("sampleId")) {
-                String str = listParams.get("sampleId");
-                if (str != null && !str.trim().isEmpty()) return ncDataRepo.findBySampleID(Long.parseLong(str));
-            }
-            if (listParams.containsKey("id")) {
-                String str = listParams.get("id");
-                if (str != null && !str.trim().isEmpty()) return ncDataRepo.findById(Long.parseLong(str));
-            }
-        return new ArrayList<NcData>();
+        long sampleId=0;
+        String ncCode=null;
+        if (listParam.containsKey("sampleId")) {
+            String str = listParam.get("sampleId");
+            if (str != null && !str.trim().isEmpty()) sampleId=(Long.parseLong(str));
+         }
+        if (listParam.containsKey("ncCode")) { ncCode= listParam.get("ncCode");}
+        return ncDataRepo.findByParam(sampleId,ncCode);
         }
         catch (Exception ex)
         {

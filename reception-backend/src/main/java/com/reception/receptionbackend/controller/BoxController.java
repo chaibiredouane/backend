@@ -6,7 +6,9 @@ import com.reception.receptionbackend.repository.BoxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins ="http://localhost:4200")
 @RestController
@@ -25,4 +27,19 @@ public class BoxController {
     public void deleteBox(@RequestBody Box body){boxRepo.delete(body); }
     @GetMapping (value = "/{id}")
     public Box BoxById(@PathVariable int id){ return boxRepo.findById(id); }
+    @GetMapping (value = "/param")
+    public List<Box> getByParam(@RequestParam Map<String, String> listParam)
+    {
+        try {
+            String cesId=null;
+            String barcode=null;
+            if (listParam.containsKey("cesId")) {cesId= listParam.get("cesId");}
+            if (listParam.containsKey("barcode")) { barcode= listParam.get("barcode");}
+            return boxRepo.findByParam(cesId,barcode);
+        }
+        catch (Exception ex)
+        {
+            return new ArrayList<Box>();
+        }
+    }
 }

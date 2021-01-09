@@ -12,7 +12,7 @@ import java.util.List;
 public interface NcDataRepository extends JpaRepository<NcData,Long> {
     List<NcData> findById(long id);
 
-   @Query(value = "SELECT ID, SAMPLE_ID, NC_CODE, STATUS, USER_COMMENT, CREATE_DATE, CREATE_BY FROM CONREP_NON_CONFORMITY  WHERE SAMPLE_ID = :param1",nativeQuery = true)
-   List<NcData>  findBySampleID(@Param("param1") long sample_id);
+   @Query(value = "SELECT ID, SAMPLE_ID, NC_CODE, STATUS, USER_COMMENT, CREATE_DATE, CREATE_BY FROM CONREP_NON_CONFORMITY  WHERE (SAMPLE_ID = :param1 OR :param1=0)  AND (NC_CODE = :param2 OR :param2 IS NULL)",nativeQuery = true)
+   List<NcData>  findByParam(@Param("param1") long sample_id,@Param("param2") String ncCode);
 
 }

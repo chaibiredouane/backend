@@ -1,14 +1,12 @@
 package com.reception.receptionbackend.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "CONREP_BOX")
 public class Box {
    @Id
+   @GeneratedValue(strategy= GenerationType.AUTO)
    private int id;
    private String ces_id;
    private String expected_delivery_date;
@@ -23,7 +21,7 @@ public class Box {
 
     public Box() {}
 
-    public Box(String ces_id, String expected_delivery_date, String box_barcode, String scan_datetime, String scan_by, String status, String opened_by, String temp_status, String nb_forms, String import_process_id) {
+    public Box(String expected_delivery_date, String box_barcode, String scan_datetime, String scan_by, String status, String opened_by, String temp_status, String nb_forms, String import_process_id) {
         this.ces_id = ces_id;
         this.expected_delivery_date = expected_delivery_date;
         this.box_barcode = box_barcode;
