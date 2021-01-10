@@ -1,9 +1,7 @@
 package com.reception.receptionbackend.controller;
 
-import com.reception.receptionbackend.model.ExpectedSample;
-import com.reception.receptionbackend.model.NcCondition;
-import com.reception.receptionbackend.model.NcData;
-import com.reception.receptionbackend.model.NcInfo;
+import com.reception.receptionbackend.model.*;
+import com.reception.receptionbackend.repository.DictionaryRepository;
 import com.reception.receptionbackend.repository.NcConditionRepository;
 import com.reception.receptionbackend.repository.NcDataRepository;
 import com.reception.receptionbackend.repository.NcInfoRepository;
@@ -26,6 +24,8 @@ public class NonConformity {
     private NcConditionRepository ncCondRepo;
     @Autowired
     private NcDataRepository ncDataRepo;
+    @Autowired
+    private DictionaryRepository dicoRepo;
 
     @GetMapping(value = "/info")
     public List<NcInfo> getNcInfos(){ return ncInfoRepo.findAll();}
@@ -35,8 +35,10 @@ public class NonConformity {
     public void updateNcInfo(@RequestBody NcInfo body){ ncInfoRepo.save(body);}
     @DeleteMapping(value = "/info")
     public void deleteNcInfo(@RequestBody NcInfo body){ncInfoRepo.delete(body); }
-    /* @GetMapping (value = "/info/{id}")
-    public NcInfo ncInfoById(@PathVariable int id){ return ncInfoRepo.findById(id); } */
+    @GetMapping(value = "/info/code")
+    public List<DictionaryModel> getNcCode(){ return dicoRepo.getNcCode();}
+    @GetMapping(value = "/info/code/{id}")
+    public List<DictionaryModel> getNcCodeWithId(@PathVariable long id){ return dicoRepo.getNcCodeWithId(id);}
 
     @GetMapping(value = "/cond")
     public List<NcCondition> getNcConditions(){return ncCondRepo.findAll();}
